@@ -4,12 +4,14 @@ from flask_smorest import Blueprint, abort
 import os
 import ast
 from schema import AiSchema,SkillsSchema
+from dotenv import load_dotenv
 
 blp = Blueprint("ai", __name__, description="generate content for cv")
 
 
 @blp.route("/ai/<string:title>")
 class Skills(MethodView):
+    load_dotenv()
     api_key = os.getenv('API_KEY')
     genai.configure(api_key=api_key)
     model = genai.GenerativeModel('gemini-pro')
@@ -26,6 +28,7 @@ class Skills(MethodView):
             
 @blp.route("/ai")
 class CVList(MethodView):
+    load_dotenv()
     api_key = os.getenv('API_KEY')
     genai.configure(api_key=api_key)
     model = genai.GenerativeModel('gemini-pro') 
