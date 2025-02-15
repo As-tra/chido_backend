@@ -10,3 +10,4 @@ instance/
 lib/
 lib64/
 .env
+.flaskenv

@@ -8,7 +8,6 @@ import os
 
 
 def create_app(db_url=None):
-    print(db_url)
     app = Flask(__name__)
     app.config["API_TITLE"] = "Chido REST API: Welcome To The Vortex"
     app.config["API_VERSION"] = "v1"
@@ -33,17 +32,22 @@ def create_app(db_url=None):
     return app
 
 
+# Load environment variables
+load_dotenv()
+USER = os.getenv("user")
+PASSWORD = os.getenv("password")
+HOST = os.getenv("host")
+PORT = os.getenv("port")
+DBNAME = os.getenv("dbname")
+
+# Create the app instance
+if all([USER, PASSWORD, HOST, PORT, DBNAME]):
+    DATABASE_URL = f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DBNAME}?sslmode=require"
+else:
+    DATABASE_URL = None
+
+app = create_app(db_url=DATABASE_URL)
+
+
 if __name__ == "__main__":
-    load_dotenv()
-    USER = os.getenv("user")
-    PASSWORD = os.getenv("password")
-    HOST = os.getenv("host")
-    PORT = os.getenv("port")
-    DBNAME = os.getenv("dbname")
-    if all([USER, PASSWORD, HOST, PORT, DBNAME]):
-        DATABASE_URL = f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DBNAME}?sslmode=require"
-    else:
-        DATABASE_URL = None 
-    
-    app = create_app(db_url=DATABASE_URL)
     app.run(debug=False)
