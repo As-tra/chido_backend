@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py.class
+
+bin/
+include/
+instance/
+lib/
+lib64/
+.env
