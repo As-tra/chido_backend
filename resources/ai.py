@@ -19,7 +19,7 @@ class Skills(MethodView):
     @blp.response(200, SkillsSchema)
     def get(self, title):
         try:
-            prompt = f"Give me a list of skills for the job title '{title}' in the form of an array in this form ['skill1', 'skill2',...]."
+            prompt =f"Analyze the following description provided by the user: '{title}'. Identify and extract all relevant skills, knowledge, or areas of expertise mentioned by the user. Format the output as a Python array, like this: ['skill1', 'skill2', 'skill3', ...]. Ensure the skills are specific, clear, and directly derived from the user's description."
             response = self.model.generate_content(prompt)
             skills = ast.literal_eval(response.text)
             return {"skills": skills}
