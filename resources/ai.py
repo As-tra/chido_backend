@@ -19,7 +19,15 @@ class Skills(MethodView):
     @blp.response(200, SkillsSchema)
     def get(self, title):
         try:
-            prompt =f"Analyze the following description provided by the user: '{title}'. Identify and extract all relevant skills, knowledge, or areas of expertise mentioned by the user. Format the output as a Python array, like this: ['skill1', 'skill2', 'skill3', ...]. Ensure the skills are specific, clear, and directly derived from the user's description."
+            prompt = f"""
+            Analyze the following input provided by the user: {title}. 
+            1. If the input is a clear job title or role (e.g., "Software Engineer," "Graphic Designer"), extract and suggest a comprehensive list of relevant skills for that job title to help the user build their CV. 
+            2. If the input is random text (e.g., hobbies, interests, or general knowledge), identify and extract only the skills, knowledge, or areas of expertise mentioned by the user.
+            3. In both cases, suggest additional relevant or related skills that align with the context of the input to enhance the user's CV.
+
+            Format the output as a Python array, like this: ['skill1', 'skill2', 'skill3', ...].
+            Ensure the skills are specific, concise, and directly relevant to the input provided.
+            """
             response = self.model.generate_content(prompt)
             skills = ast.literal_eval(response.text)
             return {"skills": skills}

@@ -49,3 +49,5 @@ class CVList(MethodView):
     #             'experience': [ExperienceSchema().dumps(exp) for exp in experience]
     #         })
     #     return {"users":users}
+    
+    
