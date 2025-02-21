@@ -41,7 +41,7 @@ class CVList(MethodView):
                 prompt_prefix += f" for the role of {data['job_title']}"
             prompt_prefix += " to make it clearer, more consistent, and engaging."
 
-            full_prompt = f"{prompt_prefix}\n\nHere is the description:\n{data['content']}\nProvide only the reformatted version without any additional text or introductions."
+            full_prompt = f"{prompt_prefix}\n\nHere is the description:\n{data['content']}.and must be in paragraph form and without starting lines with '*'"
             response = self.model.generate_content(full_prompt)
             data["content"] = response.text
             return data
